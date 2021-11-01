@@ -6,6 +6,9 @@ import data.AbstractContract;
 
 import java.util.Iterator;
 
+/**
+ * Класс для хранения контрактов
+ */
 public class Repository implements Iterable<AbstractContract>{
     private List<AbstractContract> contracts;
 
@@ -14,11 +17,20 @@ public class Repository implements Iterable<AbstractContract>{
         contracts = new ArrayList<>();
     }
 
+    /**
+     * Добавить контракт в репозиторий
+     * @param contract
+     */
     public void addContract(AbstractContract contract)
     {
         contracts.add(contract);
     }
 
+    /**
+     * Получение контракта по id контракта
+     * @param id
+     * @return
+     */
     public AbstractContract getContract(Integer id)
     {
         for (int i = 0; i < contracts.size(); ++i)
@@ -31,6 +43,10 @@ public class Repository implements Iterable<AbstractContract>{
         return null;
     }
 
+    /**
+     * Удаление контракта по id
+     * @param id
+     */
     public void removeContract(Integer id)
     {
         for (int i = 0; i < contracts.size(); ++i)
@@ -42,6 +58,10 @@ public class Repository implements Iterable<AbstractContract>{
         }
     }
 
+    /**
+     * Получить итератор
+     * @return
+     */
     @Override
     public Iterator<AbstractContract> iterator()
     {
