@@ -20,6 +20,13 @@ public interface List<T> {
     T get(int index);
 
     /**
+     * Изменение значения по индексу
+     * @param index индекс элемента
+     * @param value значение, которое нужно установить
+     */
+    void set(int index, T value);
+
+    /**
      * Удаление объекта по индексу
      * @param index
      */

@@ -3,7 +3,9 @@ import org.junit.Before;
 import org.junit.Test;
 import repository.Repository;
 
+import java.util.Comparator;
 import java.util.Date;
+import java.util.function.Predicate;
 
 public class TestRepository {
 
@@ -38,9 +40,29 @@ public class TestRepository {
         contract3.setNumber(23456);
         contract3.setOwner(human);
 
+        MobilContract contract4 = new MobilContract();
+        contract4.setDateEnd(new Date(1, 3, 2));
+        contract4.setId(23);
+        contract4.setCountSMS(12);
+        contract4.setCountMinutes(500);
+        contract4.setOwner(human);
+        contract4.setTraffic(100.6);
+        contract4.setNumber(1000);
+
+        InternetContract contract5 = new InternetContract();
+        contract5.setVelocity(10000);
+        contract5.setDateEnd(new Date(23, 2, 4));
+        contract5.setId(101);
+        contract5.setNumber(2000);
+        contract5.setOwner(human);
+
+
         repository.addContract(contract1);
         repository.addContract(contract2);
         repository.addContract(contract3);
+        repository.addContract(contract4);
+        repository.addContract(contract5);
+
     }
 
     @Test
@@ -57,5 +79,44 @@ public class TestRepository {
     {
         AbstractContract contract = repository.getContract(10);
         assert ( contract instanceof InternetContract );
+    }
+
+    @Test
+    public void testGetRepositoryByPredicate()
+    {
+        Repository repository = this.repository.getRepositoryBy(new Predicate<AbstractContract>() {
+            @Override
+            public boolean test(AbstractContract contract)
+            {
+                return contract instanceof MobilContract;
+            }
+        });
+        for(AbstractContract contract : repository)
+        {
+            assert (contract instanceof MobilContract);
+        }
+    }
+
+    @Test
+    public void testSortRepository()
+    {
+        repository.sortRepository(new Comparator<AbstractContract>() {
+            @Override
+            public int compare(AbstractContract contract1, AbstractContract contract2)
+            {
+                return  contract1.getId() - contract2.getId();
+            }
+        });
+        int m = -1;
+        for(AbstractContract contract : repository)
+        {
+            if(m < 0)
+            {
+                m = contract.getId();
+                continue;
+            }
+            assert (contract.getId() < m);
+            m = contract.getId();
+        }
     }
 }

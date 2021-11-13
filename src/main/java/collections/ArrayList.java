@@ -60,6 +60,14 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
+    public void set(int index, T value)
+    {
+        if(index >= size)
+            throw new IndexOutOfBoundsException();
+        array[index].value = value;
+    }
+
+    @Override
     public void remove(int index)
     {
         if(index >= size)
